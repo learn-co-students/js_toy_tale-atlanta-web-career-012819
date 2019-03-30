@@ -2,95 +2,82 @@ const addBtn = document.querySelector('#new-toy-btn')
 const toyForm = document.querySelector('.container')
 let addToy = false
 
-document.addEventListener('DOMContentLoaded', function(event) {
-  renderAllToys()
+// YOUR CODE HERE
 
+document.addEventListener('DOMContentLoaded', () =>{
+  document.addEventListener('submit', handleNewToy)
+  renderAllToys()
 })
 
-function renderAllToys() {
-fetch('http://localhost:3000/toys')
-.then (response => response.json())
-.then (data => data.map(toy => renderToy(toy)))
-
+function renderAllToys(){
+  fetch('http://localhost:3000/toys')
+  .then(resp => resp.json())
+  .then(data => data.forEach(toy => renderToy(toy)))
 }
 
-function renderToy(toy) {
-
-  const toyContainer = document.getElementById("toy-collection")
-  const card = document.createElement('div')
-  
-  card.setAttribute('class', 'card')
-  card.dataset.id = toy.id
-  const h2 = document.createElement('h2')
-    h2.textContent = toy.name
-  const img = document.createElement('img')
-  img.setAttribute('class', "toy-avatar")
-  img.id = "img"
-  img.src = toy.image
-  const p = document.createElement('p')
-  p.textContent = toy.likes
-  p.id = "likes"
-  const likesBtn = document.createElement('button')
-  likesBtn.setAttribute('class', "like-btn")
-  likesBtn.innerText = "Like <3"
-  likesBtn.dataset.id = toy.id
-  likesBtn.addEventListener('click', handleLike)
-
-
-    toyContainer.appendChild(card)
-    card.appendChild(h2)
-     card.appendChild(img)
-     card.appendChild(p)
-     card.appendChild(likesBtn)
-
+function renderToy(toy){
+const toyDiv = document.getElementById("toy-collection")
+const toyCard = document.createElement('div')
+toyCard.setAttribute('class', 'card')
+const toyTag = document.createElement('h2')
+toyTag.textContent = toy.name
+const toyImage = document.createElement('img')
+toyImage.setAttribute('class', 'toy-avatar')
+toyImage.id = 'img'
+toyImage.src = toy.image
+const p = document.createElement('p')
+p.innerText = toy.likes
+const button = document.createElement('button')
+button.setAttribute('class', "like-btn")
+button.textContent = "Like <3"
+button.dataset.id = toy.id
+button.addEventListener('click', handleLikeButton)
+toyDiv.appendChild(toyCard)
+toyCard.appendChild(toyTag)
+toyCard.appendChild(toyImage)
+toyCard.appendChild(p)
+toyCard.appendChild(button)
 }
 
-function handleLike(event) {
-   console.log(" this is the event: ", event)
-  let newLike = parseInt(event.target.previousSibling.innerText)
-  let id = event.target.dataset.id
-  console.log(event.target.previousSibling)
-  let fetchBody = {
+function handleLikeButton(e){
+   let like = e.target.previousSibling.innerText
+   let id = e.target.dataset.id
+   e.target.previousSibling.innerText = ++like
+   let fetchBody = {
     headers: {
       "Content-Type": "application/json",
     Accept: "application/json"},
     method: 'PATCH',
-    body: `{"likes": ${++newLike}}`
+    body: `{"likes": ${like}}`
   }
-  event.target.previousSibling.innerHTML = newLike
-
   fetch(`http://localhost:3000/toys/${id}`, fetchBody)
-         .then(res => console.log(res))
+         .then(resp => console.log(resp))
 }
 
-toyForm.addEventListener('submit', handleNewToy)
-
-function handleNewToy(event) {
-  event.preventDefault()
-    console.log(event.target.elements)
-    // debugger;
-      let fetchBody = {
+function handleNewToy(e){
+  e.preventDefault()
+  let fetchBody = {
           
-          headers:{
-            "Content-Type": "application/json",
-            Accept: "application/json"
-          },
-          method: 'POST', 
-          body: JSON.stringify({
-            name: event.target.elements.name.value,
-            image: event.target.elements.image.value,
-            likes: 0
+    headers:{
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    method: 'POST', 
+    body: JSON.stringify({
+      name: e.target.elements.name.value,
+      image: e.target.elements.image.value,
+      likes: 0
 
-          })
-          }
-                     
-      
-      console.log(fetchBody)
-       fetch('http://localhost:3000/toys', fetchBody)
-       .then(res => res.json())
-       .then(toy => renderToy(toy))
-  }
+    })
+    }
+               
 
+console.log(fetchBody)
+ fetch('http://localhost:3000/toys', fetchBody)
+ .then(res => res.json())
+ .then(toy => renderToy(toy))
+ e.target.reset()
+}
 
 addBtn.addEventListener('click', () => {
   // hide & seek with the form
@@ -102,3 +89,6 @@ addBtn.addEventListener('click', () => {
     toyForm.style.display = 'none'
   }
 })
+
+
+// OR HERE!

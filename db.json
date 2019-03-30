@@ -4,13 +4,13 @@
       "id": 1,
       "name": "Woody",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Woody-PNG-Photos.png",
-      "likes": 6
+      "likes": 8
     },
     {
       "id": 2,
       "name": "Buzz Lightyear",
       "image": "http://www.pngmart.com/files/6/Buzz-Lightyear-PNG-Transparent-Picture.png",
-      "likes": 9
+      "likes": 13
     },
     {
       "id": 3,
@@ -53,6 +53,24 @@
       "image": "https://i.pinimg.com/280x280_RS/60/26/bf/6026bfcad7e8550632572af5f00ace26.jpg",
       "likes": 1,
       "id": 9
+    },
+    {
+      "name": "Megan",
+      "image": "https://i.pinimg.com/280x280_RS/60/26/bf/6026bfcad7e8550632572af5f00ace26.jpg",
+      "likes": 1,
+      "id": 10
+    },
+    {
+      "name": "Megan",
+      "image": "https://cdn.shopify.com/s/files/1/1708/7943/products/53540_Copyright_RedDressBoutique_2017.jpg?v=1548798964",
+      "likes": 0,
+      "id": 11
+    },
+    {
+      "name": "lil Baby",
+      "image": "https://i.pinimg.com/280x280_RS/60/26/bf/6026bfcad7e8550632572af5f00ace26.jpg",
+      "likes": 0,
+      "id": 12
     }
   ]
 }
